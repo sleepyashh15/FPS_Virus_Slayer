@@ -116,6 +116,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scope"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8d02bb8-5cdc-43bf-a67a-43f41b06552c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -371,6 +380,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c1ac7d7-3ee5-434d-9809-db0ec9c23ac7"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -389,6 +409,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_HumanoidLand_Fire = m_HumanoidLand.FindAction("Fire", throwIfNotFound: true);
         m_HumanoidLand_Switching = m_HumanoidLand.FindAction("Switching", throwIfNotFound: true);
         m_HumanoidLand_Reload = m_HumanoidLand.FindAction("Reload", throwIfNotFound: true);
+        m_HumanoidLand_Scope = m_HumanoidLand.FindAction("Scope", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -458,6 +479,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_HumanoidLand_Fire;
     private readonly InputAction m_HumanoidLand_Switching;
     private readonly InputAction m_HumanoidLand_Reload;
+    private readonly InputAction m_HumanoidLand_Scope;
     public struct HumanoidLandActions
     {
         private @InputActions m_Wrapper;
@@ -472,6 +494,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_HumanoidLand_Fire;
         public InputAction @Switching => m_Wrapper.m_HumanoidLand_Switching;
         public InputAction @Reload => m_Wrapper.m_HumanoidLand_Reload;
+        public InputAction @Scope => m_Wrapper.m_HumanoidLand_Scope;
         public InputActionMap Get() { return m_Wrapper.m_HumanoidLand; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -511,6 +534,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Reload.started -= m_Wrapper.m_HumanoidLandActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_HumanoidLandActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_HumanoidLandActionsCallbackInterface.OnReload;
+                @Scope.started -= m_Wrapper.m_HumanoidLandActionsCallbackInterface.OnScope;
+                @Scope.performed -= m_Wrapper.m_HumanoidLandActionsCallbackInterface.OnScope;
+                @Scope.canceled -= m_Wrapper.m_HumanoidLandActionsCallbackInterface.OnScope;
             }
             m_Wrapper.m_HumanoidLandActionsCallbackInterface = instance;
             if (instance != null)
@@ -545,6 +571,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
+                @Scope.started += instance.OnScope;
+                @Scope.performed += instance.OnScope;
+                @Scope.canceled += instance.OnScope;
             }
         }
     }
@@ -561,5 +590,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnSwitching(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnScope(InputAction.CallbackContext context);
     }
 }

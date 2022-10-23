@@ -105,17 +105,25 @@ namespace Unity.FPS.Gameplay
         public bool IsCrouching { get; private set; }
 
         public float RotationMultiplier = 0.01f;
-      /*  {
-            get
-            {
-                if (m_WeaponsManager.IsAiming)
-                {
-                    return AimingRotationMultiplier;
-                }
 
-                return 1f;
-            }
-        }*/
+        //new rotation edited
+       // public Quaternion rotation;
+        float xRotation;
+        float yRotation;
+        [SerializeField] Transform cam = null;
+        [SerializeField] Transform orientation = null;
+    
+        /*  {
+              get
+              {
+                  if (m_WeaponsManager.IsAiming)
+                  {
+                      return AimingRotationMultiplier;
+                  }
+
+                  return 1f;
+              }
+          }*/
 
         Health m_Health;
         PlayerInputHandler m_InputHandler;
@@ -266,24 +274,42 @@ namespace Unity.FPS.Gameplay
 
         void HandleCharacterMovement()
         {
+            float mouseX = 0;
+            float mouseY = 0;
+            mouseX = m_InputHandler.GetLookInputsHorizontal();
+            mouseY = m_InputHandler.GetLookInputsVertical();
+
+
+            yRotation += mouseX * RotationSpeed * RotationMultiplier;
+            xRotation -= mouseY * RotationSpeed * RotationMultiplier;
+            xRotation -= mouseY * Time.deltaTime;
             // horizontal character rotation
             {
+              //  xRotation = mouseY * RotationSpeed * RotationMultiplier;
                 // rotate the transform with the input speed around its local Y axis
-                transform.Rotate(
-                    new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed * RotationMultiplier),
-                        0f), Space.Self);
+                /*   transform.Rotate(
+                       new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed * RotationMultiplier),
+                           0f), Space.Self);*/
+              
             }
 
             // vertical camera rotation
             {
+                
+              
+                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+                cam.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+                orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
                 // add vertical inputs to the camera's vertical angle
-                m_CameraVerticalAngle += m_InputHandler.GetLookInputsVertical() * RotationSpeed * RotationMultiplier;
+                //--  m_CameraVerticalAngle += m_InputHandler.GetLookInputsVertical() * RotationSpeed * 
+                //--RotationMultiplier;
 
                 // limit the camera's vertical angle to min/max
-                m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -89f, 89f);
+                //    m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -89f, 89f);
 
                 // apply the vertical angle as a local rotation to the camera transform along its right axis (makes it pivot up and down)
-                PlayerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
+                //--   PlayerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
             }
 
             // character movement handling

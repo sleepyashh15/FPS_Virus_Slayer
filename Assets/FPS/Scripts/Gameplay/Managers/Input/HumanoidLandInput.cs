@@ -22,6 +22,7 @@ namespace Unity.FPS.Gameplay
 
         public float ScrollIsPressed { get; private set; } = 0.0f;
 
+        public float ScopeIsPressed { get; private set; } = 0.0f;
 
         public bool ChangeCameraWasPressedThisFrame { get; private set; } = false;
 
@@ -59,6 +60,9 @@ namespace Unity.FPS.Gameplay
 
             _input.HumanoidLand.Switching.performed += SetSwitching;
             _input.HumanoidLand.Switching.canceled += SetSwitching;
+
+            _input.HumanoidLand.Scope.started += SetScope;
+            _input.HumanoidLand.Scope.canceled += SetScope;
         }
 
         private void OnDisable()
@@ -89,6 +93,9 @@ namespace Unity.FPS.Gameplay
 
             _input.HumanoidLand.Switching.performed -= SetSwitching;
             _input.HumanoidLand.Switching.canceled -= SetSwitching;
+
+            _input.HumanoidLand.Scope.started -= SetScope;
+            _input.HumanoidLand.Scope.canceled -= SetScope;
 
             _input.HumanoidLand.Disable();
         }
@@ -147,5 +154,11 @@ namespace Unity.FPS.Gameplay
         {
             ScrollIsPressed = ctx.ReadValue<float>();
         }
+
+        private void SetScope(InputAction.CallbackContext ctx)
+        {
+            ScopeIsPressed = ctx.ReadValue<float>();
+        }
+
     }
 }

@@ -97,7 +97,7 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                // return Input.GetButtonDown(GameConstants.k_ButtonNameJump);
+               //  return Input.GetButtonDown(GameConstants.k_ButtonNameJump);
                 return _input.JumpIsPressed;
             }
 
@@ -108,8 +108,8 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                return Input.GetButton(GameConstants.k_ButtonNameJump);
-               // return _input.JumpIsPressed;
+              //  return Input.GetButton(GameConstants.k_ButtonNameJump);
+                return _input.JumpIsPressed;
             }
 
             return false;
@@ -149,10 +149,14 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadAim) != 0f;
+                /*bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadAim) != 0f;
                 bool i = isGamepad
                     ? (Input.GetAxis(GameConstants.k_ButtonNameGamepadAim) > 0f)
-                    : Input.GetButton(GameConstants.k_ButtonNameAim);
+                    : Input.GetButton(GameConstants.k_ButtonNameAim);*/
+                bool isGamepad = _input.ScopeIsPressed != 0f;
+                bool i = isGamepad ? (_input.ScopeIsPressed > 0f)
+                    : _input.ScopeIsPressed != 0f; 
+
                 return i;
             }
 
