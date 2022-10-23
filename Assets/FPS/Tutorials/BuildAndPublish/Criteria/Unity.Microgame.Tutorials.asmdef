@@ -1,0 +1,19 @@
+{
+    "name": "Unity.Microgame.Tutorials",
+    "rootNamespace": "",
+    "references": [
+        "GUID:149cad238efed4f53ac932b1e9555356",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
