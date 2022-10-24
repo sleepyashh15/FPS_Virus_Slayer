@@ -37,6 +37,18 @@ namespace Unity.FPS.AI
         const string k_AnimAttackParameter = "Attack";
         const string k_AnimOnDamagedParameter = "OnDamaged";
 
+        public Vector3 EnemyAttackOffset = new Vector3(0, 0, -9);
+
+        public Vector3 TargetOffset(GameObject target)
+        {
+
+            Vector3 position;
+            position = target.transform.position;
+            var CurrentOffset = position + (transform.up * EnemyAttackOffset.y) + (transform.right * EnemyAttackOffset.x) + (transform.forward * EnemyAttackOffset.z);
+            return CurrentOffset;
+
+
+        }
         protected virtual void Start()
         {
             m_ActorsManager = FindObjectOfType<ActorsManager>();
@@ -94,9 +106,18 @@ namespace Unity.FPS.AI
                 }
             }
 
+            /* IsTargetInAttackRange = KnownDetectedTarget != null &&
+                                     Vector3.Distance(transform.position, KnownDetectedTarget.transform.position) <=
+                                     AttackRange;*/
+            Vector3 position;
+            position = transform.position;
+            var CurrentOffset = position + (transform.up * EnemyAttackOffset.y) + (transform.right * EnemyAttackOffset.x) + (transform.forward * EnemyAttackOffset.z);
+          //  return CurrentOffset;
+
             IsTargetInAttackRange = KnownDetectedTarget != null &&
-                                    Vector3.Distance(transform.position, KnownDetectedTarget.transform.position) <=
-                                    AttackRange;
+                                   Vector3.Distance(CurrentOffset, KnownDetectedTarget.transform.position) <=
+                                   AttackRange;
+
 
             // Detection events
             if (!HadKnownTarget &&
@@ -119,7 +140,7 @@ namespace Unity.FPS.AI
 
         public virtual void OnDetect() => onDetectedTarget?.Invoke();
 
-        public virtual void OnDamaged(GameObject damageSource)
+        public void OnDamaged(GameObject damageSource)
         {
             TimeLastSeenTarget = Time.time;
             KnownDetectedTarget = damageSource;
@@ -130,7 +151,7 @@ namespace Unity.FPS.AI
             }
         }
 
-        public virtual void OnAttack()
+        public void OnAttack()
         {
             if (Animator)
             {
