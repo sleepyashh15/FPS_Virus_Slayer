@@ -1,4 +1,5 @@
-﻿using Unity.FPS.Game;
+﻿using System.Collections;
+using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -141,6 +142,8 @@ namespace Unity.FPS.Gameplay
         const float k_JumpGroundingPreventionTime = 0.2f;
         const float k_GroundCheckDistanceInAir = 0.07f;
 
+        public HumanoidLandInput _input;
+
         void Awake()
         {
             ActorsManager actorsManager = FindObjectOfType<ActorsManager>();
@@ -272,17 +275,36 @@ namespace Unity.FPS.Gameplay
             }
         }
 
+        public bool ShootIsPressed;
+        Vector2 MouseLookInput;
+        float mouseXz = 0;
+        float mouseYz = 0;
+   
         void HandleCharacterMovement()
         {
             float mouseX = 0;
             float mouseY = 0;
-            mouseX = m_InputHandler.GetLookInputsHorizontal();
-            mouseY = m_InputHandler.GetLookInputsVertical();
+               mouseX = m_InputHandler.GetLookInputsHorizontal();
+              mouseY = m_InputHandler.GetLookInputsVertical();
+          /*  mouseX = m_InputHandler.GetLookInputsHorizontal(); //_input.LookInput.x;
+            mouseY = m_InputHandler.GetLookInputsVertical(); //_input.LookInput.y;
 
+            float RotSpeed = 70f;
+            MouseLookInput = new Vector3(_input.LookInput.x, 0f, _input.LookInput.y);
+            ShootIsPressed = !(MouseLookInput == Vector2.zero);
+
+            if (!ShootIsPressed)
+            {
+                RotSpeed = RotationSpeed;
+                mouseX = m_InputHandler.GetLookInputsHorizontal();
+                mouseY = m_InputHandler.GetLookInputsVertical();
+            }*/
 
             yRotation += mouseX * RotationSpeed * RotationMultiplier;
             xRotation -= mouseY * RotationSpeed * RotationMultiplier;
             xRotation -= mouseY * Time.deltaTime;
+
+            
             // horizontal character rotation
             {
               //  xRotation = mouseY * RotationSpeed * RotationMultiplier;
@@ -301,6 +323,7 @@ namespace Unity.FPS.Gameplay
 
                 cam.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
                 orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+              
                 // add vertical inputs to the camera's vertical angle
                 //--  m_CameraVerticalAngle += m_InputHandler.GetLookInputsVertical() * RotationSpeed * 
                 //--RotationMultiplier;
@@ -410,6 +433,8 @@ namespace Unity.FPS.Gameplay
 
                 CharacterVelocity = Vector3.ProjectOnPlane(CharacterVelocity, hit.normal);
             }
+           
+            
         }
 
         // Returns true if the slope angle represented by the given normal is under the slope angle limit of the character controller

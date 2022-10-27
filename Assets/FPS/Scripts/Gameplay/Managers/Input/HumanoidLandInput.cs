@@ -28,6 +28,8 @@ namespace Unity.FPS.Gameplay
 
         InputActions _input = null;
 
+        PlayerInputHandler m_InputHandler;
+
 
         private void OnEnable()
         {
@@ -70,7 +72,7 @@ namespace Unity.FPS.Gameplay
             _input.HumanoidLand.Move.performed -= SetMove;
             _input.HumanoidLand.Move.canceled -= SetMove;
 
-            _input.HumanoidLand.Look.performed -= SetLook;
+           _input.HumanoidLand.Look.performed -= SetLook;
             _input.HumanoidLand.Look.canceled -= SetLook;
 
             _input.HumanoidLand.Run.started -= SetRun;
@@ -117,6 +119,15 @@ namespace Unity.FPS.Gameplay
             ShootIsPressed = !(LookInput == Vector2.zero);
 
         }
+     /*   private void SetLook(float x, float y)
+        {
+            x = m_InputHandler.GetLookInputsHorizontal();
+            y = m_InputHandler.GetLookInputsVertical();
+
+            LookInput = new Vector2(x, y);
+            ShootIsPressed = !(LookInput == Vector2.zero);
+
+        }*/
 
         private void SetRun(InputAction.CallbackContext ctx)
         {

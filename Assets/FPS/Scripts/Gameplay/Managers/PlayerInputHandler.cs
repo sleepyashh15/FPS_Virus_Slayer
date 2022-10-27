@@ -82,8 +82,11 @@ namespace Unity.FPS.Gameplay
 
             //     return GetMouseOrStickLookAxis(GameConstants.k_MouseAxisNameHorizontal,
             //       GameConstants.k_AxisNameJoystickLookHorizontal);
-          
+
+ 
                  return SimpleInput.GetAxis("LookX");
+
+
         }
 
         public float GetLookInputsVertical()
