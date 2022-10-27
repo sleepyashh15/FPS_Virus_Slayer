@@ -284,8 +284,8 @@ namespace Unity.FPS.Gameplay
         {
             float mouseX = 0;
             float mouseY = 0;
-               mouseX = m_InputHandler.GetLookInputsHorizontal();
-              mouseY = m_InputHandler.GetLookInputsVertical();
+                mouseX = SimpleInput.GetAxis("LookX");
+                mouseY = SimpleInput.GetAxis("LookY");
           /*  mouseX = m_InputHandler.GetLookInputsHorizontal(); //_input.LookInput.x;
             mouseY = m_InputHandler.GetLookInputsVertical(); //_input.LookInput.y;
 
@@ -303,8 +303,9 @@ namespace Unity.FPS.Gameplay
             yRotation += mouseX * RotationSpeed * RotationMultiplier;
             xRotation -= mouseY * RotationSpeed * RotationMultiplier;
             xRotation -= mouseY * Time.deltaTime;
+            mouseX = 0;
+            mouseY = 0;
 
-            
             // horizontal character rotation
             {
               //  xRotation = mouseY * RotationSpeed * RotationMultiplier;
@@ -433,8 +434,8 @@ namespace Unity.FPS.Gameplay
 
                 CharacterVelocity = Vector3.ProjectOnPlane(CharacterVelocity, hit.normal);
             }
-           
             
+
         }
 
         // Returns true if the slope angle represented by the given normal is under the slope angle limit of the character controller
